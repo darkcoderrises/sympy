@@ -563,6 +563,22 @@ class log(Function):
                     else:
                         return -S.Pi * S.ImaginaryUnit * S.Half + cls(-coeff)
 
+        if arg.is_complex:
+            from sympy.functions import arg as Arg
+            from sympy.functions import Abs
+
+            if Arg(arg) == 0:
+                return
+
+            rad = Abs(arg)
+            try:
+                if int(rad) == rad:
+                    rad = int(rad)
+            except:
+                pass
+
+            return cls(rad) + S.ImaginaryUnit * Arg(arg)
+
     def as_base_exp(self):
         """
         Returns this function in the form (base, exponent).
